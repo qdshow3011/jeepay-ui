@@ -35,11 +35,9 @@ RUN rm -rf /etc/nginx/conf.d/default.conf
 # 复制并修改 Nginx 配置模板以支持 PORT 变量
 COPY --from=builder /workspace/default.conf.template /etc/nginx/templates/default.conf.template
 
-# 创建启动脚本，用于替换 Nginx 配置中的端口
-RUN echo '#!/bin/sh' > /docker-entrypoint.sh && \
-    echo 'envsubst \"$$BACKEND_HOST,$$PORT\" < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf' >> /docker-entrypoint.sh && \
-    echo 'exec nginx' >> /docker-entrypoint.sh && \
-    chmod +x /docker-entrypoint.sh
+# 复制启动脚本
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE ${PORT}
 
