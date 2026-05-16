@@ -1,0 +1,12 @@
+{
+  "build": {
+    "builder": "DOCKER",
+    "buildargs": {
+      "PLATFORM": "${PLATFORM:-manager}"
+    }
+  },
+  "deploy": {
+    "healthcheckPath": "/",
+    "healthcheckTimeout": 300
+  }
+}
