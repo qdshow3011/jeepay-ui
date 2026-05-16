@@ -38,7 +38,7 @@ COPY --from=builder /workspace/default.conf.template /etc/nginx/templates/defaul
 # 创建启动脚本，用于替换 Nginx 配置中的端口
 RUN echo '#!/bin/sh' > /docker-entrypoint.sh && \
     echo 'envsubst \"$$BACKEND_HOST,$$PORT\" < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf' >> /docker-entrypoint.sh && \
-    echo 'exec nginx -g \"daemon off;\"' >> /docker-entrypoint.sh && \
+    echo 'exec nginx' >> /docker-entrypoint.sh && \
     chmod +x /docker-entrypoint.sh
 
 EXPOSE ${PORT}
